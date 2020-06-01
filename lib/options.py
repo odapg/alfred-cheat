@@ -51,10 +51,17 @@ class Options:
             Options.warning("Cheat sheet not found.","", self._workflow)
             return None
         for sheet in ret:
-            self._workflow.add_item(
+            it=self._workflow.add_item(
                     title=sheet,
                     autocomplete=sheet,
                     )
+           # To open directly the cheat file in finder using cmd-return
+           # One should also add the corresponding action in the alfredworkflow
+            it.add_modifier('cmd', 
+                    subtitle='Open the "%s" cheat file in editor' % sheet,
+                    valid=True,
+                    arg= self._parser._sheetMapping.get(sheet),
+                    )            
         return None
 
     @staticmethod
